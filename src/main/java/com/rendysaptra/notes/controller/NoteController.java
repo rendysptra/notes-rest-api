@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,16 +54,25 @@ public class NoteController {
         return ResponseEntity.ok(noteDtos);
     }
 
-    @PutMapping("/{taskId}")
+    @PutMapping("/{noteId}")
     public ResponseEntity<NoteDto> updateNote(
-        @PathVariable UUID taskId,
+        @PathVariable UUID noteId,
         @Valid @RequestBody UpdateNoteRequestDto updateNoteRequestDto
     ) {
         UpdateNoteRequest updateNoteRequest = noteMapper.fromDto(updateNoteRequestDto);
-        Note note = noteService.updateNote(taskId, updateNoteRequest);
+        Note note = noteService.updateNote(noteId, updateNoteRequest);
         NoteDto updatedNoteDto = noteMapper.toDto(note);
 
         return ResponseEntity.ok(updatedNoteDto);
+    }
+
+    @DeleteMapping(path = "/{noteId}") 
+    public ResponseEntity<Void> deleteNote(
+        @PathVariable UUID noteId
+    ){
+        noteService.deleteNote(noteId);
+        
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
