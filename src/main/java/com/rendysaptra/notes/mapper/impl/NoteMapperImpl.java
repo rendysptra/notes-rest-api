@@ -1,12 +1,12 @@
-package com.rendysaptra.mapper.impl;
+package com.rendysaptra.notes.mapper.impl;
 
 import org.springframework.stereotype.Component;
 
-import com.rendysaptra.domain.CreateNoteRequest;
-import com.rendysaptra.domain.dto.CreateNoteRequestDto;
-import com.rendysaptra.domain.dto.NoteDto;
-import com.rendysaptra.domain.entity.Note;
-import com.rendysaptra.mapper.NoteMapper;
+import com.rendysaptra.notes.domain.CreateNoteRequest;
+import com.rendysaptra.notes.domain.dto.CreateNoteRequestDto;
+import com.rendysaptra.notes.domain.dto.NoteDto;
+import com.rendysaptra.notes.domain.entity.Note;
+import com.rendysaptra.notes.mapper.NoteMapper;
 
 @Component 
 public class NoteMapperImpl implements NoteMapper{

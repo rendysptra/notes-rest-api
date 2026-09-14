@@ -1,4 +1,4 @@
-package com.rendysaptra.domain.dto;
+package com.rendysaptra.notes.domain.dto;
 
 import java.time.Instant;
 import java.util.UUID;

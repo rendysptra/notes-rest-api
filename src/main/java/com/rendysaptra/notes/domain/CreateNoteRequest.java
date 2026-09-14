@@ -1,4 +1,4 @@
-package com.rendysaptra.domain;
+package com.rendysaptra.notes.domain;
 
 public record CreateNoteRequest(
     String title,

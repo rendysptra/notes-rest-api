@@ -1,15 +1,15 @@
-package com.rendysaptra.service.impl;
+package com.rendysaptra.notes.service.impl;
 
-import com.rendysaptra.repository.NoteRepository;
+import com.rendysaptra.notes.domain.CreateNoteRequest;
+import com.rendysaptra.notes.domain.entity.Note;
+import com.rendysaptra.notes.repository.NoteRepository;
+import com.rendysaptra.notes.service.NoteService;
+
 import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import com.rendysaptra.domain.CreateNoteRequest;
-import com.rendysaptra.domain.entity.Note;
-import com.rendysaptra.service.NoteService;
 
 @Service 
 public class NoteServiceImpl implements NoteService{
