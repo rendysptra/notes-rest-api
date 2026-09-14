@@ -1,18 +1,23 @@
 package com.rendysaptra.notes.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rendysaptra.notes.domain.CreateNoteRequest;
+import com.rendysaptra.notes.domain.UpdateNoteRequest;
 import com.rendysaptra.notes.domain.dto.CreateNoteRequestDto;
 import com.rendysaptra.notes.domain.dto.NoteDto;
+import com.rendysaptra.notes.domain.dto.UpdateNoteRequestDto;
 import com.rendysaptra.notes.domain.entity.Note;
 import com.rendysaptra.notes.mapper.NoteMapper;
 import com.rendysaptra.notes.service.NoteService;
@@ -46,6 +51,18 @@ public class NoteController {
         List<Note> notes = noteService.listNotes();
         List<NoteDto> noteDtos = notes.stream().map(noteMapper::toDto).toList();
         return ResponseEntity.ok(noteDtos);
+    }
+
+    @PutMapping("/{taskId}")
+    public ResponseEntity<NoteDto> updateNote(
+        @PathVariable UUID taskId,
+        @Valid @RequestBody UpdateNoteRequestDto updateNoteRequestDto
+    ) {
+        UpdateNoteRequest updateNoteRequest = noteMapper.fromDto(updateNoteRequestDto);
+        Note note = noteService.updateNote(taskId, updateNoteRequest);
+        NoteDto updatedNoteDto = noteMapper.toDto(note);
+
+        return ResponseEntity.ok(updatedNoteDto);
     }
 
 }
