@@ -3,8 +3,10 @@ package com.rendysaptra.notes.mapper.impl;
 import org.springframework.stereotype.Component;
 
 import com.rendysaptra.notes.domain.CreateNoteRequest;
+import com.rendysaptra.notes.domain.UpdateNoteRequest;
 import com.rendysaptra.notes.domain.dto.CreateNoteRequestDto;
 import com.rendysaptra.notes.domain.dto.NoteDto;
+import com.rendysaptra.notes.domain.dto.UpdateNoteRequestDto;
 import com.rendysaptra.notes.domain.entity.Note;
 import com.rendysaptra.notes.mapper.NoteMapper;
 
@@ -14,6 +16,15 @@ public class NoteMapperImpl implements NoteMapper{
     @Override
     public CreateNoteRequest fromDto(CreateNoteRequestDto dto) {
         return new CreateNoteRequest(
+            dto.title(),
+            dto.content(),
+            dto.url()
+        );
+    }
+
+    @Override
+    public UpdateNoteRequest fromDto(UpdateNoteRequestDto dto) {
+        return new UpdateNoteRequest(
             dto.title(),
             dto.content(),
             dto.url()
@@ -31,5 +42,6 @@ public class NoteMapperImpl implements NoteMapper{
             note.getUpdated()
         );
     }
+
 
 }
