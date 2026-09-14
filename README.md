@@ -1,35 +1,40 @@
-# Notes
+# Notes API
 
-Aplikasi REST API untuk mengelola catatan dan bookmark. Project ini dibangun
-menggunakan Spring Boot dan saat ini masih berada pada tahap awal pengembangan.
+Simple REST API for creating and reading notes. This project is built with
+Spring Boot and uses Spring Data JPA to store `Note` data.
 
-## Status
+## Feature Status
 
-Struktur dasar aplikasi sudah tersedia, tetapi endpoint, entity, repository,
-dan service untuk catatan atau bookmark belum diimplementasikan.
+- `POST /v1/notes` to create a note
+- `GET /v1/notes` to retrieve all notes
+- Title validation is required and limited to 255 characters
+- Note IDs are generated as UUIDs
+- Notes are sorted by creation time in ascending order
 
-## Teknologi
+Update, delete, search, and bookmark operations are not available yet.
+
+## Technology
 
 - Java 26
 - Spring Boot 4.1.1
 - Spring Web MVC
 - Spring Data JPA
-- H2 Database
+- H2 Database and H2 Console
 - Spring Validation
 - Maven Wrapper
 
-## Prasyarat
+## Prerequisites
 
 - Java Development Kit (JDK) 26
-- Tidak perlu memasang Maven secara global karena project menyediakan Maven Wrapper
+- Maven does not need to be installed globally because the project provides a Maven Wrapper
 
-Periksa versi Java yang digunakan:
+Check the installed Java version:
 
 ```bash
 java --version
 ```
 
-## Menjalankan Aplikasi
+## Running the Application
 
 Linux/macOS:
 
@@ -40,12 +45,53 @@ Linux/macOS:
 Windows:
 
 ```powershell
-.mvnw.cmd spring-boot:run
+./mvnw.cmd spring-boot:run
 ```
 
-Aplikasi akan berjalan pada `http://localhost:8080`.
+The application runs at `http://localhost:8080`.
 
-## Menjalankan Test
+## API
+
+### Create a Note
+
+`POST /v1/notes`
+
+Request body:
+
+```json
+{
+	"title": "Learning Spring Boot",
+	"content": "Learning about REST APIs and JPA",
+	"url": "https://spring.io"
+}
+```
+
+Example using `curl`:
+
+```bash
+curl -X POST http://localhost:8080/v1/notes \
+	-H "Content-Type: application/json" \
+	-d '{"title":"Learning Spring Boot","content":"Learning about REST APIs and JPA","url":"https://spring.io"}'
+```
+
+Successful responses use the `201 Created` status and include `id`, `title`,
+`content`, `url`, `created`, and `updated`.
+
+`title` must be a non-blank string between 1 and 255 characters. `content` and
+`url` are optional.
+
+### Retrieve All Notes
+
+`GET /v1/notes`
+
+```bash
+curl http://localhost:8080/v1/notes
+```
+
+Successful responses use the `200 OK` status and return an array of notes
+sorted by creation time in ascending order.
+
+## Running Tests
 
 Linux/macOS:
 
@@ -56,35 +102,43 @@ Linux/macOS:
 Windows:
 
 ```powershell
-.mvnw.cmd test
+./mvnw.cmd test
 ```
 
-## Membuat File JAR
+The project currently includes a smoke test to verify that the application
+context can be loaded.
+
+## Building the JAR File
 
 ```bash
 ./mvnw clean package
 java -jar target/notes-0.0.1-SNAPSHOT.jar
 ```
 
-## Struktur Project
+## Project Structure
 
 ```text
 src/
 ├── main/
 │   ├── java/com/rendysaptra/notes/
+│   │   ├── controller/       # REST endpoints
+│   │   ├── domain/           # Requests, DTOs, and Note entity
+│   │   ├── mapper/           # Domain object and DTO mapping
+│   │   ├── repository/       # Spring Data JPA data access
+│   │   ├── service/          # Application logic
 │   │   └── NotesApplication.java
 │   └── resources/
 │       ├── application.properties
 │       ├── static/
 │       └── templates/
 └── test/
-	└── java/com/rendysaptra/notes/
-		└── NotesApplicationTests.java
+    └── java/com/rendysaptra/notes/
+        └── NotesApplicationTests.java
 ```
 
-## Pengembangan Berikutnya
+## Planned Improvements
 
-- Menambahkan entity dan operasi CRUD untuk notes dan bookmark.
-- Menambahkan repository, service, dan controller REST.
-- Menambahkan konfigurasi database serta dokumentasi endpoint.
-- Menambahkan test untuk setiap operasi API.
+- Add update and delete operations.
+- Add note filtering or search.
+- Add controller, service, and request validation tests.
+- Add explicit database configuration for production environments.
