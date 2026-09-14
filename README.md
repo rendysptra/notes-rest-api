@@ -1,40 +1,40 @@
 # Notes API
 
-REST API sederhana untuk membuat dan membaca catatan. Project ini dibangun
-dengan Spring Boot dan menggunakan Spring Data JPA untuk menyimpan data `Note`.
+Simple REST API for creating and reading notes. This project is built with
+Spring Boot and uses Spring Data JPA to store `Note` data.
 
-## Status Fitur
+## Feature Status
 
-- `POST /v1/notes` untuk membuat catatan
-- `GET /v1/notes` untuk mengambil semua catatan
-- Validasi judul wajib diisi dan maksimal 255 karakter
-- ID catatan dibuat sebagai UUID
-- Catatan diurutkan berdasarkan waktu dibuat secara ascending
+- `POST /v1/notes` to create a note
+- `GET /v1/notes` to retrieve all notes
+- Title validation is required and limited to 255 characters
+- Note IDs are generated as UUIDs
+- Notes are sorted by creation time in ascending order
 
-Operasi update, delete, pencarian, dan bookmark belum tersedia.
+Update, delete, search, and bookmark operations are not available yet.
 
-## Teknologi
+## Technology
 
 - Java 26
 - Spring Boot 4.1.1
 - Spring Web MVC
 - Spring Data JPA
-- H2 Database dan H2 Console
+- H2 Database and H2 Console
 - Spring Validation
 - Maven Wrapper
 
-## Prasyarat
+## Prerequisites
 
 - Java Development Kit (JDK) 26
-- Tidak perlu memasang Maven secara global karena project menyediakan Maven Wrapper
+- Maven does not need to be installed globally because the project provides a Maven Wrapper
 
-Periksa versi Java yang digunakan:
+Check the installed Java version:
 
 ```bash
 java --version
 ```
 
-## Menjalankan Aplikasi
+## Running the Application
 
 Linux/macOS:
 
@@ -48,11 +48,11 @@ Windows:
 ./mvnw.cmd spring-boot:run
 ```
 
-Aplikasi akan berjalan pada `http://localhost:8080`.
+The application runs at `http://localhost:8080`.
 
 ## API
 
-### Membuat Catatan
+### Create a Note
 
 `POST /v1/notes`
 
@@ -60,27 +60,27 @@ Request body:
 
 ```json
 {
-	"title": "Belajar Spring Boot",
-	"content": "Mempelajari REST API dan JPA",
+	"title": "Learning Spring Boot",
+	"content": "Learning about REST APIs and JPA",
 	"url": "https://spring.io"
 }
 ```
 
-Contoh dengan `curl`:
+Example using `curl`:
 
 ```bash
 curl -X POST http://localhost:8080/v1/notes \
 	-H "Content-Type: application/json" \
-	-d '{"title":"Belajar Spring Boot","content":"Mempelajari REST API dan JPA","url":"https://spring.io"}'
+	-d '{"title":"Learning Spring Boot","content":"Learning about REST APIs and JPA","url":"https://spring.io"}'
 ```
 
-Respons berhasil menggunakan status `201 Created` dan berisi `id`, `title`,
-`content`, `url`, `created`, serta `updated`.
+Successful responses use the `201 Created` status and include `id`, `title`,
+`content`, `url`, `created`, and `updated`.
 
-`title` wajib berupa string yang tidak kosong dengan panjang 1 sampai 255
-karakter. `content` dan `url` boleh dikosongkan.
+`title` must be a non-blank string between 1 and 255 characters. `content` and
+`url` are optional.
 
-### Mengambil Semua Catatan
+### Retrieve All Notes
 
 `GET /v1/notes`
 
@@ -88,10 +88,10 @@ karakter. `content` dan `url` boleh dikosongkan.
 curl http://localhost:8080/v1/notes
 ```
 
-Respons berhasil menggunakan status `200 OK` dan berupa array catatan yang
-diurutkan berdasarkan waktu dibuat secara ascending.
+Successful responses use the `200 OK` status and return an array of notes
+sorted by creation time in ascending order.
 
-## Menjalankan Test
+## Running Tests
 
 Linux/macOS:
 
@@ -105,26 +105,27 @@ Windows:
 ./mvnw.cmd test
 ```
 
-Saat ini tersedia smoke test untuk memastikan application context dapat dimuat.
+The project currently includes a smoke test to verify that the application
+context can be loaded.
 
-## Membuat File JAR
+## Building the JAR File
 
 ```bash
 ./mvnw clean package
 java -jar target/notes-0.0.1-SNAPSHOT.jar
 ```
 
-## Struktur Project
+## Project Structure
 
 ```text
 src/
 ├── main/
 │   ├── java/com/rendysaptra/notes/
-│   │   ├── controller/       # Endpoint REST
-│   │   ├── domain/           # Request, DTO, dan entity Note
-│   │   ├── mapper/           # Konversi domain object dan DTO
-│   │   ├── repository/       # Akses data melalui Spring Data JPA
-│   │   ├── service/          # Logika aplikasi
+│   │   ├── controller/       # REST endpoints
+│   │   ├── domain/           # Requests, DTOs, and Note entity
+│   │   ├── mapper/           # Domain object and DTO mapping
+│   │   ├── repository/       # Spring Data JPA data access
+│   │   ├── service/          # Application logic
 │   │   └── NotesApplication.java
 │   └── resources/
 │       ├── application.properties
@@ -135,9 +136,9 @@ src/
         └── NotesApplicationTests.java
 ```
 
-## Pengembangan Berikutnya
+## Planned Improvements
 
-- Menambahkan operasi update dan delete.
-- Menambahkan filter atau pencarian catatan.
-- Menambahkan test controller, service, dan validasi request.
-- Menambahkan konfigurasi database yang eksplisit untuk lingkungan produksi.
+- Add update and delete operations.
+- Add note filtering or search.
+- Add controller, service, and request validation tests.
+- Add explicit database configuration for production environments.
