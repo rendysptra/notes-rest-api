@@ -15,4 +15,6 @@ public interface NoteService {
 
     List<Note> listNotes();
 
+    void deleteNote(UUID noteId);
+
 }
